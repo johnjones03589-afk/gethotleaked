@@ -1,0 +1,1563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MY CONTENT LEAKED PREVIOUS</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #2c2222;
+            color: white;
+            overflow-x: hidden;
+        }
+        /* Estilo do cabeçalho fixo */
+        .header {
+            position: sticky;
+            top: 0;
+            background-color: #1d1d1d;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .header.shrink {
+            padding: 10px 15px;
+        }
+
+        .header .icon {
+            width: 50px;
+            height: 50px;
+            background-color: #00aaff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .header.shrink .icon {
+            width: 0;
+            height: 0;
+            opacity: 0;
+        }
+
+        .header .info {
+            flex-grow: 1;
+            text-align: center;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .header.shrink .info {
+            text-align: left;
+            font-size: 14px;
+        }
+
+        .header h1 {
+            font-size: 18px;
+            margin: 0;
+            transition: all 0.3s ease;
+        }
+
+        .header.shrink h1 {
+            font-size: 16px;
+            max-width: 150px;
+        }
+
+        .header .members {
+            font-size: 14px;
+            color: #bbb;
+            transition: all 0.3s ease;
+        }
+
+        .header .pay-button {
+            display: none;
+            font-size: 14px;
+            color: white;
+            background-color: #00aaff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+
+        .header.shrink .pay-button {
+            display: inline-block;
+            opacity: 1;
+        }
+
+        /* Fundo da área de mensagens */
+        .group {
+            margin-top: 20px;
+            padding: 0 15px;
+            overflow-y: auto;
+            max-height: calc(100vh - 100px);
+            background-image: url('https://i.postimg.cc/wvm97fyb/IMG-20241130-200303.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            scrollbar-width: thin;
+        }
+
+        .preview {
+            margin-bottom: 15px;
+            background-color: rgba(29, 29, 29, 0.8);
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .preview .title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .preview .videos {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            scrollbar-width: thin;
+        }
+
+        .preview .videos video {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .preview .description {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #bbb;
+        }
+
+        /* Estilizando a barra de rolagem */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(29, 29, 29, 0.8);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #00aaff;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #008fcc;
+        }
+
+        /* Botão flutuante no canto inferior esquerdo */
+        .floating-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #0088cc;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            cursor: pointer;
+            animation: bounce 2s infinite;
+            z-index: 101;
+        }
+
+        .floating-button img {
+            width: 30px;
+            height: 30px;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Estilo do pop-up */
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 600px;
+            background-color: #1d1d1d;
+            padding: 20px;
+            border-radius: 8px;
+            z-index: 102;
+            display: none;
+        }
+
+        .popup.active {
+            display: block;
+        }
+
+        .popup video {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .popup .close-btn {
+            margin-top: 10px;
+            text-align: right;
+            cursor: pointer;
+            color: #00aaff;
+            font-size: 16px;
+        }
+        
+        .product-preview {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      width: 100%; /* Adaptação responsiva */
+      padding: 15px;
+      text-align: center;
+  }
+
+  .product-title {
+      font-size: 20px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 10px;
+  }
+
+  .media-frame {
+      width: 100%;
+      height: 100vh;
+      max-height: 400px; /* Limite máximo */
+      border: none;
+      border-radius: 8px;
+      margin-bottom: 15px;
+  }
+
+
+  .product-description {
+      text-align: left;
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 10px;
+  }
+
+  .product-description ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+  }
+
+  .product-description li {
+      margin: 5px 0;
+  }
+
+  .product-price span strong a{
+      font-size: 16px;
+      color: #1a73e8;
+      font-weight: bold;
+  }
+  
+  .popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .popup-content {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      width: 90%;
+      max-width: 500px;
+      text-align: center;
+      position: relative;
+      overflow-y: auto;
+      max-height: 80%;
+    }
+
+    .popup-content h2 {
+      margin-top: 0;
+      color: #333;
+    }
+
+    .popup-content ul {
+      list-style: none;
+      padding: 0;
+      margin: 20px 0;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+
+    .popup-content ul li {
+      margin: 5px 0;
+      color: #555;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: none;
+      color: #333;
+      border: none;
+      font-size: 1.5rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close-btn:hover {
+      color: #d9534f;
+    }
+
+    .get-now-btn {
+      background: #5cb85c;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 15px;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .get-now-btn:hover {
+      background: #4cae4c;
+    }
+
+    .view-more {
+      color: #007bff;
+      text-decoration: none;
+      cursor: pointer;
+      margin-left:150px;
+    }
+
+    .view-more:hover {
+      text-decoration: underline;
+    }
+        #notification-container {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 320px;
+  z-index: 1000;
+}
+
+.notification {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 20px;
+  padding: 10px 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 14px;
+  margin-bottom: 10px;
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: fade-in 1s ease forwards, fade-out 1s ease 4s forwards;
+  backdrop-filter: blur(10px);
+  position: relative;
+}
+
+.notification img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 12px;
+}
+
+.notification-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.notification-title {
+  font-weight: bold;
+  color: #333;
+}
+
+.notification-message {
+  color: #666;
+  font-size: 13px;
+}
+
+.notification-time {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-size: 12px;
+  color: #888;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+}
+/* Modal Container */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  transition: opacity 0.3s ease;
+}
+
+.modal.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Modal Content */
+.modal-content {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 20px 30px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  animation: scale-in 0.3s ease;
+}
+
+.modal-content h2 {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.modal-content p {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.btn {
+  padding: 10px 20px;
+  font-size: 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.positive {
+  background-color: #007bff;
+  color: white;
+  animation: button-wiggle 1.5s infinite ease-in-out;
+}
+
+.negative {
+  background-color: #f44336;
+  color: white;
+}
+
+/* Button Wiggle Animation */
+@keyframes button-wiggle {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-3px);
+  }
+}
+
+/* Scale animation for the modal */
+@keyframes scale-in {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+    </style>
+</head>
+<body>
+<div id="notification-container"></div>
+    <div class="header" id="header">
+        <div class="icon" id="icon">MC</div>
+        <div class="info">
+            <h1 id="group-name">MY CONTENT LEAKED PREVIOUS</h1>
+            <span class="members">5863 members  <span id="online-count">1279</span> online</span>
+        </div>
+        <div class="pay-button" onclick="openPopup()"></div>
+    </div>
+
+
+    <div class="group">
+        <!-- Conteúdo do grupo -->
+        <div class="preview">
+          <div class="videos">
+              <div class="product-preview">
+        <h1 class="product-title">ZOOM FOLDER</h1>
+        <video 
+        class="media-frame" 
+        controls
+        autoplay 
+        muted 
+        loop 
+        width="100%">
+        <source src="Zoom Folder.mp4" type="video/mp4">
+        Seu navegador não suporta o vídeo.
+        </video>
+        <div class="product-description">
+          <p><strong></strong> </p>
+          <ul>
+              <li>OVER 500 VIDEOS </li>
+              <li>CONTENT OF ANIMALS</li>
+              <li>Incest </li>
+              <li>MORE THAN 200 BLACKMAIL VIDEOS</li>
+              <li>Mega Folder  </li>
+          </ul>
+      <div class="">
+          <span style='color:red'><strong></strong> </span>
+      </div>
+      </div>
+      <div class="product-price">
+          <span><strong><a href="https://t.me/BlackCat_ADM1">GET NOW</a></strong></span>
+      </div>
+  </div>
+          </div>
+          <div class="description"></div>
+      </div>
+      
+              
+</div>
+<div class="preview">
+  <div class="videos">
+      <div class="product-preview">
+<h1 class="product-title">SNAPGOD FULL EDITION</h1>
+<video 
+class="media-frame" 
+controls
+autoplay 
+muted 
+loop 
+width="100%">
+<source src="Sapgod.mp4" type="video/mp4">
+Seu navegador não suporta o vídeo.
+</video>
+<div class="product-description">
+  <p><strong></strong> </p>
+  <ul>
+      <li>LEAKED SNAP OF REAL GIRLS</li>
+      <li>530GB IN TOTAL</li>
+      <li>MORE THAN 200 BLACKMAIL</li>
+      <li>CRAZY MEGA FOLDERS</li>
+      <li>BEST SELLERS</li>
+      <li>MY COMPLETE FOLDER</li>
+  </ul>
+<div class="">
+  <span style='color:red'><strong></strong></span>
+</div>
+</div>
+<div class="product-price">
+  <span><strong><a href="https://t.me/BlackCat_ADM1">GET NOW</a></strong></span>
+</div>
+</div>
+  </div>
+  <div class="description"></div>
+</div>
+</div>
+<div class="preview">
+  <div class="videos">
+      <div class="product-preview">
+<h1 class="product-title">CP FOLDER</h1>
+<video 
+class="media-frame" 
+controls
+autoplay 
+muted 
+loop 
+width="100%">
+<source src="Cp.mp4" type="video/mp4">
+Seu navegador não suporta o vídeo.
+</video>
+<div class="product-description">
+  <ul>
+      <li>Full Videos </li>
+      <li>Mega Folder  </li>
+      <li>30GB pure of Content</li>
+  </ul>
+<div class="">
+  <span style='color:red'><strong></strong></span>
+</div>
+</div>
+<div class="product-price"> 
+  <span><strong><a href="https://t.me/BlackCat_ADM1">GET NOW</a></strong></span>
+  <p><strong> </strong> </p>
+</div>
+</div>
+  </div>
+  <div class="description"></div>
+</div>
+    </div>
+    <div class="preview">
+      <div class="videos">
+          <div class="product-preview">
+  <h1 class="product-title">MONKEY APP WINS</h1>
+  <video 
+  class="media-frame" 
+  controls
+  autoplay 
+  muted 
+  loop 
+  width="100%">
+  <source src="mokey wiss.mp4" type="video/mp4">
+  Seu navegador não suporta o vídeo.
+  </video>
+  <div class="product-description">
+    <p><strong></strong> </p>
+      <ul>
+          <li>ABOUT 200 girls</li>
+          <li>MY BEST MONKEY APP FOLDER</li>
+          <li>BLACKMAIL</li>
+          <li>MEGA FOLDER PREMIUM</li>
+      </ul>
+  <div class="">
+      <span style='color:red'><strong></strong></span>
+  </div>
+  </div>
+  <div class="product-price">
+      <span><strong><a href="https://t.me/BlackCat_ADM1">GET NOW</a>
+  </div>
+  </div>
+      </div>
+      <div class="description"></div>
+  </div>
+
+  <div class="preview">
+    <div class="videos">
+        <div class="product-preview">
+  <h1 class="product-title">CSL RARE FOLDER</h1>
+  <video 
+  class="media-frame" 
+  controls
+  autoplay 
+  muted 
+  loop 
+  width="100%">
+  <source src="csl rare folder.MP4" type="video/mp4">
+  Seu navegador não suporta o vídeo.
+  </video>
+  <div class="product-description">
+    
+    <ul>
+        <li>THE BEST REACTIONS </li>
+        <li>CSL Rare Folder</li>
+        <li>OLD BUT GOLD</li>
+        <li>15GB FILE</li>
+    </ul>
+  <div class="">
+    <span style='color:red'><strong></strong></span>
+  </div>
+  </div>
+  <div class="product-price">
+    <span><strong><a href="https://t.me/BlackCat_ADM1">GET NOW</a></strong></span>
+  </div>
+  </div>
+    </div>
+    <div class="description"></div>
+  </div>
+  </div>
+</div>
+</div>
+<div class="preview">
+  <div class="videos">
+      <div class="product-preview">
+<h1 class="product-title">Desiree Garcia folder</h1>
+<video 
+class="media-frame" 
+controls
+autoplay 
+muted 
+loop 
+width="100%">
+<source src="D garcia.MP4" type="video/mp4">
+Seu navegador não suporta o vídeo.
+</video>
+<div class="product-description">
+
+  <ul>
+      <li>Snapchat hacking tools</li>
+      <li>Snap leak</li>
+      <li>Complete folder</li>
+      <li>Teens</li>
+      <li>Blackmail</li>
+  </ul>
+<div class="">
+  <span style='color:red'><strong></strong></span>
+</div>
+</div>
+<div class="product-price">
+  <span><strong><a href="https://t.me/BlackCat_ADM1">GET NOW</a></strong></span>
+</div>
+</div>
+  </div>
+  <div class="description"></div>
+</div>
+
+</div>
+
+<div class="preview">
+  <div class="videos">
+      <div class="product-preview">
+<h1 class="product-title">MOM AND SON</h1>
+<video 
+class="media-frame" 
+controls
+autoplay 
+muted 
+loop 
+width="100%">
+<source src="Mom a So.mp4" type="video/mp4">
+Seu navegador não suporta o vídeo.
+</video>
+<div class="product-description">
+ 
+  <ul>
+      <li>R£AL !NC#ST V!D£0S COLLECTION</li>
+      <li>THIS FOLDER GOES CRAZY</li>
+      <li>Amazing videos</li>
+      <li>MOM – DAUGTH3ER </li>
+      <li>MEGA FOLDER</li>
+  </ul>
+<div class="">
+  <span style='color:red'><strong></strong></span>
+</div>
+</div>
+<div class="product-price">
+  <span><strong><a href="https://t.me/BlackCat_ADM1">GET NOW</a>
+</div>
+</div>
+  </div>
+  <div class="description"></div>
+</div>
+
+</div>
+
+
+<div class="preview">
+  <div class="videos">
+      <div class="product-preview">
+<h1 class="product-title">LIZZY FOLDER</h1>
+<video 
+                  class="media-frame" 
+                  controls
+                  autoplay 
+                  muted 
+                  loop 
+                  width="100%">
+                  <source src="lizzy 11.MP4" type="video/mp4">
+                  Seu navegador não suporta o vídeo.
+              </video>
+<div class="product-description">
+  <ul>
+    
+      <li>THIS FOLDER GOES CRAZY 🥵</li>
+      <li>Inc3st Content 
+      <li>With more than 200 videos
+      <li>20GB</li>
+      <li>REAL EXCLUSIVE FOLDER</li>
+      
+  </ul>
+<div class="">
+  <span style='color:red'><strong></strong></span>
+</div>
+</div>
+<div class="product-price">
+  <span><strong><a href="https://t.me/BlackCat_ADM1">GET NOW</a>
+</div>
+</div>
+  </div>
+  <div class="description"></div>
+</div>
+<div class="preview">
+  <div class="videos">
+      <div class="product-preview">
+<h1 class="product-title">IVANKA FOLDER</h1>
+<video 
+class="media-frame" 
+controls
+autoplay 
+muted 
+loop 
+width="100%">
+<source src="ivanka.MP4 hom.MP4" type="video/mp4">
+Seu navegador não suporta o vídeo.
+</video>
+</iframe>
+<div class="product-description">
+<p><strong>After payment you will receive the folder link </strong> </p>
+  <ul>
+      <li>Contents of inc3st</li>
+      <li>Amazing videos</li>
+      <li>+246 videos</li>
+      <li>Real Teens</li>
+      <li>5GB</li>
+  </ul>
+<div class="">
+  <span style='color:red'><strong></strong></span>
+</div>
+</div>
+<div class="product-price">
+  <span><strong><a href="https://t.me/BlackCat_ADM1"">GET NOW</a>
+</div>
+</div>
+  </div>
+  <div class="description"></div>
+</div>
+</div>
+
+
+
+</div>
+
+
+    
+</div>
+
+    
+
+</div>
+
+</div>
+
+    <div class="preview">
+      <div class="videos">
+          <div class="product-preview">
+    <h1 class="product-title">Father and Daughter</h1>
+    <video 
+    class="media-frame" 
+    controls
+    autoplay 
+    muted 
+    loop 
+    width="100%">
+    <source src="father ad daughter 222.mp4" type="video/mp4">
+    Seu navegador não suporta o vídeo.
+    </video>
+    <div class="product-description">
+      <p><strong></strong> </p>
+      <ul>
+          <li>Content oF INCEST</li>
+          <li>Mega link</li>
+          <li>Hot Father and Daughter</li>
+          <li>Amazing videos</li>
+          <li>35 GB</li>
+      </ul>
+    <div class="">
+      <span style='color:red'><strong></strong></span>
+    </div>
+    </div>
+    <div class="product-price">
+      <span><strong><a href="https://t.me/BlackCat_ADM1">GET NOW</a></strong></span>
+    </div>
+    </div>
+      </div>
+      <div class="description"></div>
+    </div>
+    </div>
+  </div>
+  
+  <div class="preview">
+    <div class="videos">
+        <div class="product-preview">
+<h1 class="product-title">OMEGLE GAME FOLDER</h1>
+<video 
+class="media-frame" 
+controls
+autoplay 
+muted 
+loop 
+width="100%">
+<source src="omegle game ssss.mp4" type="video/mp4">
+Seu navegador não suporta o vídeo.
+</video>
+<div class="product-description">
+    
+    <ul>
+        <li>ANXIOUS PANDA FOLDER</li>
+        <li>SPANISH GIRLS</li>
+        <li>OVER 100GB</li>
+    </ul>
+<div class="">
+    <span style='color:red'><strong></strong></span>
+</div>
+</div>
+<div class="product-price">
+    <span><strong><a href="https://t.me/BlackCat_ADM1">GET NOW</a></strong></span>
+</div>
+</div>
+</div>
+   <div class="description"></div>
+
+<div>
+   <div class="preview">
+    <div class="videos">
+        <div class="product-preview">
+  <h1 class="product-title">Abbi Folder</h1>
+  <video 
+  class="media-frame" 
+  controls
+  autoplay 
+  muted 
+  loop 
+  width="100%">
+  <source src="ssapgod blackmail.MP4" type="video/mp4">
+  Seu navegador não suporta o vídeo.
+  </video>
+  <div class="product-description">
+
+    <ul>
+        <li>Blackmail Content</li>
+        <li>Hot gril</li>
+        <li>Mega link</li>
+        <li>Amazing videos</li>
+        <li>📦 15 GB</li>
+    </ul>
+  <div class="">
+    <span style='color:red'><strong></strong></span>
+  </div>
+  </div>
+  <div class="product-price">
+    
+    <span><strong><a href="https://t.me/BlackCat_ADM1">GET NOW</a>
+  </div>
+  </div>
+  </div>
+    </div>
+    <div class="description"></div>
+  </div>
+<div>
+  </div>
+  <div class="preview">
+    <div class="videos">
+        <div class="product-preview">
+  <h1 class="product-title">Darkzadie </h1>
+  <video 
+  class="media-frame" 
+  controls
+  autoplay 
+  muted 
+  loop 
+  width="100%">
+  <source src="Darkadie. solo.mp4" type="video/mp4">
+  Seu navegador não suporta o vídeo.
+  </video>
+  <div class="product-description">
+    <p><strong></strong> </p>
+    <ul>
+        <li>Very famous on tiktok had her snapchat leaked</li>
+        <li>Young Human</li>
+        <li>Hot Teen</li>
+        <li>Best Seller</li>
+        
+    </ul>
+  <div class="">
+    <span style='color:red'><strong></strong></span>
+  </div>
+  </div>
+  <div class="product-price">
+    <span><strong><a href="https://t.me/BlackCat_ADM1">GET NOW</a></strong></span>
+  </div>
+  </div>
+    </div>
+    <div class="description"></div>
+  </div>
+  </div>
+  </div>
+    <div class="preview">
+      <div class="videos">
+          <div class="product-preview">
+  <h1 class="product-title">BABY ASHLEE</h1>
+  <video 
+                      class="media-frame" 
+                      controls
+                      autoplay 
+                      muted 
+                      loop 
+                      width="100%">
+                      <source src="Baby Ashlee sss.mp4" type="video/mp4">
+                      Seu navegador não suporta o vídeo.
+                  </video>
+  <div class="product-description">
+      
+      <ul>
+          <li>Baby Ashlee Leaks 🔞</li>
+          <li>Very famous on tiktok had her Snapchat leaked</li>
+          <li>✅ Folder with More than 150 videos</li>
+  
+      </ul>
+  <div class="">
+      <span style='color:red'><strong></strong></span>
+  </div>
+  </div>
+  <div class="product-price">
+      <span><strong><a href="https://t.me/BlackCat_ADM1">GET NOW</a></strong></span>
+  </div>
+</div>
+      </div>
+      <div class="description"></div>
+  </div>
+</div>
+<div>
+  <div class="preview">
+    <div class="videos">
+        <div class="product-preview">
+  <h1 class="product-title">Banana Girls 2h Long</h1>
+  <img
+  class="media-frame" 
+  src="photo_2025-03-27_08-22-54.jpg" 
+  alt="Product Preview" 
+  style="width: 100%; max-width: 400px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);"
+  />
+  <div class="product-description">
+    <p><strong></strong> </p>
+    <ul>
+        <li>Amazing videos</li>
+        <li>Hot Girls</li>
+        <li>Full Video </li>
+      
+    </ul>
+  <div class="">
+    <span style='color:red'><strong></strong></span>
+  </div>
+  </div>
+  <div class="product-price"> 
+    <span><strong><a href="https://t.me/BlackCat_ADM1">GET NOW</a></strong></span>
+  </div>
+  </div>
+    </div>
+    <div class="description"></div>
+  </div>
+    
+</div>
+
+</div>
+</div>
+<div class="preview">
+  <div class="videos">
+    <div class="product-preview">
+  <h1 class="product-title">Savannah Folder</h1>
+  <video 
+  class="media-frame" 
+  controls
+  autoplay 
+  muted 
+  loop 
+  width="100%">
+  <source src="savahh.MP4" type="video/mp4">
+  Seu navegador não suporta o vídeo.
+  </video>
+  <div class="product-description">
+    <p><strong></strong> </p>
+  <ul>
+    <li>Content of teens</li>
+    <li>Mega link</li>
+    <li>Hot gril</li>
+    <li>Amazing videos</li</li>
+    <li>📦55GB<</li>
+  </ul>
+  <div class="">
+  <span style='color:red'><strong></strong></span>
+  </div>
+  </div>
+  <div class="product-price">
+  <span><strong><a href="https://t.me/BlackCat_ADM1">GET NOW</a></strong></span>
+  </div>
+  </div>
+  </div>
+  <div class="description"></div>
+  <div>
+<div class="preview">
+  <div class="videos">
+      <div class="product-preview">
+<h1 class="product-title">Ava Folder</h1>
+<video 
+class="media-frame" 
+controls
+autoplay 
+muted 
+loop 
+width="100%">
+<source src="ava.mp4" type="video/mp4">
+Seu navegador não suporta o vídeo.
+</video>
+<div class="product-description">
+ 
+  <ul>
+      <li>content of Teens </li>
+      <li>Mega link</li>
+      <li>Hot gril</li>
+      <li>Amazing videos</li>
+      <li>📦37GG</li>
+  </ul>
+<div class="">
+  <span style='color:red'><strong></strong></span>
+</div>
+</div>
+<div class="product-price">
+  <span><strong><a href="https://t.me/BlackCat_ADM1">GET NOW</a></strong></span>
+</div>
+</div>
+  </div>
+  <div class="description"></div>
+</div>
+
+</div>
+
+</div>
+<div class="preview">
+  <div class="videos">
+      <div class="product-preview">
+<h1 class="product-title">Ash Folder</h1>
+<video 
+class="media-frame" 
+controls
+autoplay 
+muted 
+loop 
+width="100%">
+<source src="ash.mp4" type="video/mp4">
+Seu navegador não suporta o vídeo.
+</video>
+<div class="product-description">
+  
+  <ul>
+      <li>Content of Teens</li>
+     <li>Link of Tenns</li> 
+      <li>Hot gril</li>
+      <li>Amazing videos</li>
+    <li>📦13GB</li> 
+<div class="">
+  <span style='color:red'><strong></strong></span>
+</div>
+</div>
+<div class="product-price">
+  <span><strong><a href="https://t.me/BlackCat_ADM1">GET NOW</a></strong></span>
+</div>
+</div>
+  </div>
+  <div class="description"></div>
+</div>
+</div>
+<div class="preview">
+  <div class="videos">
+  <div class="product-preview">
+     <h1 class="product-title">Real-Incest</h1>
+<video 
+class="media-frame" 
+controls
+autoplay 
+muted 
+loop 
+width="100%">
+<source src="real incest.mp4" type="video/mp4">
+Seu navegador não suporta o vídeo.
+</video>
+<div class="product-description">
+
+<ul>
+  <li>Content of INCEST</li>
+  <li>Mega link</li>
+  <li>Hot family</li>
+  <li>Amazing videos</li</li>
+  <li>📦145GB</li>
+</ul>
+<div class="">
+<span style='color:red'><strong></strong> </span>
+</div>
+</div>
+<div class="product-price">
+<span><strong><a href="https://t.me/BlackCat_ADM1">GET NOW</a></strong></span>
+</div>
+</div>
+<div class="description"></div>
+<div></div>
+ 
+</div>
+<div class="preview">
+    <div class="videos">
+        <div class="product-preview">
+<h1 class="product-title">IZZY Folder</h1>
+<video 
+class="media-frame" 
+controls
+autoplay 
+muted 
+loop 
+width="100%">
+<source src="Izzy dog.MP4" type="video/mp4">
+Seu navegador não suporta o vídeo.
+</video>
+<div class="product-description">
+  <p><strong></strong> </p>  
+    <ul>
+        <li>🔥THE IZZY FOLDER HAS MORE THAN 40G</li>
+        <li>Izzy and dog</li>
+        <li>Hot gril</li>
+        <li>Amazing videos</li>
+        <li>Mega link</li>
+    </ul>
+<div class="">
+    <span style='color:red'><strong></strong> </span>
+</div>
+</div>
+<div class="product-price">
+    
+    <span><strong><a href="https://t.me/BlackCat_ADM1">GET NOW</a>
+</div>
+</div>
+</div>
+    </div>
+    <div class="description"></div>
+</div>
+</div>
+
+
+    <div class="preview">
+      <div class="videos">
+          <div class="product-preview">
+    <h1 class="product-title">EMMI SELLERS</h1>
+    <video 
+    class="media-frame" 
+    controls
+    autoplay 
+    muted 
+    loop 
+    width="100%">
+    <source src="emmi sellers deitada.mp4" type="video/mp4">
+    Seu navegador não suporta o vídeo.
+    </video>
+    <div class="product-description">
+      
+      <ul>
+          <li>NEW FOLDER AVAILABLE</li>
+          <li>Leaked video</li>
+          <li>Amazing videos</li>
+          <li>MORE THAN 100Vids</li>
+      </ul>
+    <div class="">
+      <span style='color:red'><strong></strong></span>
+    </div>
+    </div>
+    <div class="product-price">
+      
+      <span><strong><a href="https://t.me/BlackCat_ADM1">GET NOW</a>
+    </div>
+    </div>
+    <div class="description"></div>
+    </div>
+</div>
+</div>
+
+<div class="preview">
+    <div class="videos">
+        <div class="product-preview">
+  <h1 class="product-title">Get My All Content😈</h1>
+  <img 
+  class="media-frame" 
+  src="All content photo.jpg" 
+  alt="Product Preview" 
+  style="width: 100%; max-width: 400px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);"
+  />
+  <div class="product-description">
+    <p><strong></strong> </p>
+    <ul>
+        <li>🔥 Limited Time Offer - 50% OFF! 🔥
+        <li>From $̶2̶0̶0 to ONLY $100!</li>
+    
+    </ul>
+  <div class="">
+    <span style='color:red'><strong>Promo</strong></span>
+  </div>
+  </div>
+  <div class="product-price">
+    <span><strong><a href="https://t.me/BlackCat_ADM1">GET ALL CONTENT</a></strong></span>
+  </div>
+  </div>
+    </div>
+    <div class="description"></div>
+  
+  </div>
+</div>
+<!-- Botão flutuante -->
+<div class="floating-button" onclick="redirectToTelegram()">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram">
+</div>
+<a class="view-more" onclick="showNewPopup()">View More</a>
+
+<div class="popup-overlay" id="newPopup">
+<div class="popup-content">
+<button class="close-btn" onclick="closeNewPopup()">×</button>
+  <h2>🚨Available Content 🚨</h2>
+  <ul>
+    <li>✅Two lesbian girls 🍌-</li>
+    <li>✅Mom and Son-</li>
+    <li>✅Lizzy Folder-</li>
+    <li>✅Desire Garcia-</li>
+    <li>✅ENGLISH T333 CP-</li>
+    <li>✅PYT Folder Incest CP-</li>
+    <li>✅Emmi sellers-</li>
+    <li>✅Black teen-</li>
+    <li>✅CSL-</li>
+    <li>✅Inc3st folder-</li>
+    <li>✅Snapgod full edition-<li>
+    <li>✅Omegle-</li>
+    <li>✅Darkzadie leaks (zip) + 2 GB folder-</li>
+    <li>✅Omegle teen leaks-</li>
+    <li>✅Monkeyapp wins-</li>
+    <li>✅Anxious Panda-</li>
+    <li>✅Flash Folder</li>
+    <li>✅Daughters wap leakzone-</li>
+    <li>✅HIGH SCHOOL-</li>
+    <li>✅Lilly lanes-</li>
+    <li>✅Queen bree69-</li>
+    <li>✅BLACKMAIL-</li>
+    <li>✅Snapchat-</li>
+    <li>✅Snap 18+ teens-</li>
+    <li>✅Skype (call USA, South Africa, girls)-</li>
+    <li>✅Snaplnk-</li>
+    <li>✅Brother and Sister-</li>
+    <li>✅CP Folder-</li>
+    <li>✅Kazumi squirt-</li>
+    <li>✅Objective dark-</li>
+  </ul>
+  <a href="https://t.me/BlackCat_ADM1" class="get-now-btn">Get Now</a>
+</div>
+</div>
+</div>
+<script>
+    // Configurações do contador
+    const minOnline = 1200; // Mínimo de pessoas online
+    const maxOnline = 1400; // Máximo de pessoas online
+    const updateInterval = 3000; // Intervalo de atualização em milissegundos (3s)
+  
+    function updateOnlineCount() {
+      const onlineCountElement = document.getElementById("online-count");
+      let currentOnline = parseInt(onlineCountElement.textContent);
+  
+      // Define o próximo valor aleatoriamente dentro de um intervalo
+      let change = Math.floor(Math.random() * 21) - 10; // Valor entre -10 e +10
+      let newOnline = currentOnline + change;
+  
+      // Garante que o valor esteja dentro do limite definido
+      if (newOnline < minOnline) newOnline = minOnline;
+      if (newOnline > maxOnline) newOnline = maxOnline;
+  
+      // Atualiza apenas o número de pessoas online
+      onlineCountElement.textContent = newOnline;
+    }
+  
+    // Atualiza o número de pessoas online em intervalos regulares
+    setInterval(updateOnlineCount, updateInterval);
+  </script>
+  <script>
+    function showNewPopup() {
+      document.getElementById("newPopup").style.display = "flex";
+    }
+  
+    function closeNewPopup() {
+      document.getElementById("newPopup").style.display = "none";
+    }
+  </script>
+      <script>
+      
+          const header = document.getElementById('header');
+          const popup = document.getElementById('popup');
+  
+          window.addEventListener('scroll', () => {
+              if (window.scrollY > 50) {
+                  header.classList.add('shrink');
+              } else {
+                  header.classList.remove('shrink');
+              }
+          });
+  
+          function openPopup() {
+              popup.classList.add('active');
+          }
+  
+          function closePopup() {
+              popup.classList.remove('active');
+          }
+  
+          function redirectToTelegram() {
+              window.open('https://t.me/BlackCat_ADM1', '_blank');
+          }
+          
+          const items = [
+    "CSL Rape Folder",
+    "SnapGod Full Edition",
+    "CP Folder",
+    "MonkeyApp Wins",
+    "Darkzadie Folder",
+    "Banana Girls 2h",
+    "Anxious Panda",
+    "Father and Daughter",
+    "Izzy Folder",
+    "Real Incest",
+    "Abbi Blackmail",
+    "Snapchat Facetime",
+    "Ava Folder",
+    "High School",
+    "Uflash Folder",
+    "Ivanka Folder",
+    "Savannah Folder",
+    "Mom and Son",
+  ];
+  
+  const maleNames = [
+    "John Smith",
+    "Michael Crawford",
+    "Lance Calagan",
+    "Michael Johnson",
+    "James Brown",
+    "Robert Davis",
+    "Wyatt Elliott",
+    "Leo Sebastian",
+    "Thomas Miller",
+    "Grayson Miles",
+    "Christopher Martinez",
+    "Daniel Anderson",
+    "Matthew Taylor",
+    "Caleb Harrison",
+    "Andrew Moore",
+  ];
+  
+  function getRandomElement(array) {
+    return array[Math.floor(Math.random() * array.length)];
+  }
+  
+  function getRandomInterval() {
+    return Math.random() * (45000 - 30000) + 30000; // Random interval between 30s and 45s
+  }
+  
+  function showNotification() {
+    const container = document.getElementById("notification-container");
+    const randomName = getRandomElement(maleNames);
+    const randomItem = getRandomElement(items);
+  
+    const notification = document.createElement("div");
+    notification.className = "notification";
+    notification.innerHTML = `
+      <img src="https://img.icons8.com/ios-filled/50/telegram-app.png" alt="App Icon">
+      <div class="notification-content">
+        <span class="notification-title">${randomName}</span>
+        <span class="notification-message">purchased ${randomItem}</span>
+      </div>
+      <span class="notification-time">Just now</span>
+    `;
+  
+    container.appendChild(notification);
+  
+    // Remove notification after 5 seconds
+    setTimeout(() => {
+      notification.style.animation = "fade-out 1s ease forwards";
+      setTimeout(() => container.removeChild(notification), 1000);
+    }, 5000);
+  }
+  
+  // Display notifications at random intervals
+  function generateNotifications() {
+    showNotification();
+    setTimeout(generateNotifications, getRandomInterval());
+  }
+  
+  // Start notifications
+  generateNotifications();
+  let modalShown = false;
+  
+  function showExitModal(event) {
+    if (!modalShown) {
+      event.preventDefault();
+      document.getElementById("offer-modal").classList.remove("hidden");
+      modalShown = true;
+    }
+  }
+  
+
+  
+       </script>
+
+  </div>
+
+  </div>
+</div>
+<footer style="text-align: center; padding: 10px; background-color: #333; color: white; width: 100%; margin-top: 20px;">
+    © 2025 All rights reserved.
+</footer>
+</body>
+</html>
+
